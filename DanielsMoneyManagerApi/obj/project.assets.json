@@ -2033,11 +2033,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Repositories\\DanielsMoneyManagerApi\\DanielsMoneyManagerApi\\DanielsMoneyManagerApi.csproj",
+      "projectUniqueName": "C:\\Repositories\\DanielsMoneyManager\\DanielsMoneyManagerApi\\DanielsMoneyManagerApi.csproj",
       "projectName": "DanielsMoneyManagerApi",
-      "projectPath": "C:\\Repositories\\DanielsMoneyManagerApi\\DanielsMoneyManagerApi\\DanielsMoneyManagerApi.csproj",
+      "projectPath": "C:\\Repositories\\DanielsMoneyManager\\DanielsMoneyManagerApi\\DanielsMoneyManagerApi.csproj",
       "packagesPath": "C:\\Users\\dani2\\.nuget\\packages\\",
-      "outputPath": "C:\\Repositories\\DanielsMoneyManagerApi\\DanielsMoneyManagerApi\\obj\\",
+      "outputPath": "C:\\Repositories\\DanielsMoneyManager\\DanielsMoneyManagerApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\dani2\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -44,7 +44,7 @@ namespace DanielsMoneyManagerApi.Controllers
             }
 
             user = _userRepo.InsertUser(userName, userPass, userEmail);
-            string jwt = _jwtService.Generate(user.User_ID, out DateTime expireAt);
+            string jwt = _jwtService.Generate(user.User_ID, out int jwtLifeTimeMs);
 
             LoginResponseDto response = new LoginResponseDto
             {
@@ -52,7 +52,7 @@ namespace DanielsMoneyManagerApi.Controllers
                 UserName = userName,
                 UserEmail = userEmail,
                 UserId = user.User_ID,
-                ExpiresAt = expireAt
+                JwtLifeTimeMs = jwtLifeTimeMs
             };
 
             return Created($"Success", response); //TODO use conflict method if already exist
@@ -79,7 +79,7 @@ namespace DanielsMoneyManagerApi.Controllers
                 return Unauthorized(new { message = "Invalid password" });
             }
 
-            var jwt = _jwtService.Generate(user.User_ID, out DateTime expireAt);
+            var jwt = _jwtService.Generate(user.User_ID, out int jwtLifeTimeMs);
 
             LoginResponseDto response = new LoginResponseDto
             {
@@ -87,7 +87,7 @@ namespace DanielsMoneyManagerApi.Controllers
                 UserName = user.User_Name,
                 UserEmail = userEmail,
                 UserId = user.User_ID,
-                ExpiresAt = expireAt
+                JwtLifeTimeMs = jwtLifeTimeMs
             };
 
             var res = Ok(response);

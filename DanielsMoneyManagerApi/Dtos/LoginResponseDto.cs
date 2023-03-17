@@ -6,6 +6,6 @@
         public string UserEmail { get; set; }
         public string Jwt { get; set; }
         public int UserId { get; set; }
-        public DateTime ExpiresAt {  get; set; }
+        public int JwtLifeTimeMs {  get; set; }
     }
 }

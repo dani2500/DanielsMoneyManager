@@ -9,15 +9,15 @@ namespace DanielsMoneyManagerApi.Helpers
     public class JwtService
     {
         private readonly string _secureKey;
-
-        private readonly IConfiguration _configuration;
+        private readonly int _lifeTimeMs;
 
         public JwtService(IConfiguration configuration)
         {
             _secureKey = configuration["Jwt:Key"];
+            _lifeTimeMs = int.Parse(configuration["Jwt:LifeTimeMs"]);
         }
 
-        public string Generate(int id, out DateTime expireAt)
+        public string Generate(int id, out int lifeTimeMs)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secureKey));
 
@@ -26,7 +26,8 @@ namespace DanielsMoneyManagerApi.Helpers
                 new Claim(ClaimTypes.UserData, id.ToString())
             };
 
-            expireAt = DateTime.Now.AddMinutes(2);
+            lifeTimeMs = _lifeTimeMs;
+            DateTime expireAt = DateTime.Now.AddMinutes(lifeTimeMs);
 
             var token = new JwtSecurityToken(
                 claims: userClaims,
