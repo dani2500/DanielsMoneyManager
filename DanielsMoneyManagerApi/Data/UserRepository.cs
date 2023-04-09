@@ -57,5 +57,33 @@ namespace DanielsMoneyManagerApi.Data
 
             return user;
         }
+
+        public User GetUserByCashActionId(int cashActionId)
+        {
+            User user;
+            using (var connection = _context.CreateConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("Cash_Action_ID", cashActionId);
+
+                user = connection.QuerySingleOrDefault<User>("Users_Get_By_Cash_Action_ID", parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return user;
+        }
+
+        public User GetUserByCategoryId(int categoryId)
+        {
+            User user;
+            using (var connection = _context.CreateConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("Category_ID", categoryId);
+
+                user = connection.QuerySingleOrDefault<User>("Users_Get_By_Category_ID", parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return user;
+        }
     }
 }

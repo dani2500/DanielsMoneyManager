@@ -20,6 +20,8 @@ builder.Services.AddScoped<JwtService>();
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<ICashActionsRepository, CashActionsRepository>();
+builder.Services.AddSingleton<ICategoriesRepository, CategoriesRepository>();
+builder.Services.AddSingleton<IFundsRepository, FundsRepository>();
 
 
 builder.Services.AddAuthentication(options =>
