@@ -27,12 +27,32 @@ namespace DanielsMoneyManagerApi.Controllers
         {
             int userId = _jwtService.GetUserId(HttpContext.User);
 
-            List<Fund> categories = _fundsRepository.GetFunds(userId);
+            List<Fund> funds = _fundsRepository.GetFunds(userId);
 
-            List<FundDto> result = categories.Select(x => new FundDto
+            List<FundDto> result = funds.Select(x => new FundDto
             {
                 fundId = x.Fund_ID,
                 fundName = x.Fund_Name
+            }).ToList();
+
+            return Ok(result);
+        }
+
+        [HttpGet("status")]
+        public IActionResult GetFundsStatus([FromQuery] FundsStatusRequestDto dto)
+        {
+            int userId = _jwtService.GetUserId(HttpContext.User);
+
+            List<FundStatus> statuses = _fundsRepository.GetFundsStatus(userId, dto.toTime);
+
+            List<FundsStatusResponseDto> result = statuses.Select(x => new FundsStatusResponseDto
+            {
+                fundId = x.Fund_ID,
+                firstInvestmentDate = x.First_Investment_Date,
+                lastInvestmentDate = x.Last_Investment_Date,
+                investedSum = x.Invested_Sum,
+                actualSum = x.Actual_Sum,
+                profit = x.Profit
             }).ToList();
 
             return Ok(result);

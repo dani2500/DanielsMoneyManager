@@ -1,10 +1,12 @@
 ﻿using DanielsMoneyManagerApi.Models;
+using System;
 
 namespace DanielsMoneyManagerApi.Data
 {
     public interface IFundsRepository
     {
         List<Fund> GetFunds(int userId);
+        List<FundStatus> GetFundsStatus(int userId, DateTime toTime);
         Fund GetFundById(int fundId);
         Fund GetFundByName(int userId, string fundName);
         void UpdateFund(int fundId, string fundName);

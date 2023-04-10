@@ -27,6 +27,22 @@ namespace DanielsMoneyManagerApi.Data
             return funds;
         }
 
+        public List<FundStatus> GetFundsStatus(int userId, DateTime toTime)
+        {
+            List<FundStatus> statuses = new List<FundStatus>();
+
+            using (var connection = _context.CreateConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("User_ID", userId);
+                parameters.Add("To_Time", toTime);
+
+                statuses = connection.Query<FundStatus>("Funds_Get_Status", parameters, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return statuses;
+        }
+
         public Fund GetFundById(int fundId)
         {
             Fund fund = null;
