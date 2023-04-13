@@ -31,6 +31,7 @@ try
     builder.Services.AddSingleton<ICashActionsRepository, CashActionsRepository>();
     builder.Services.AddSingleton<ICategoriesRepository, CategoriesRepository>();
     builder.Services.AddSingleton<IFundsRepository, FundsRepository>();
+    builder.Services.AddSingleton<IFundActionsRepository, FundActionsRepository>();
 
 
     builder.Services.AddAuthentication(options =>

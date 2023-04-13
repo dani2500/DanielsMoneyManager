@@ -83,7 +83,7 @@ namespace DanielsMoneyManagerApi.Controllers
         {
             int userId = _jwtService.GetUserId(HttpContext.User);
 
-            User userByCashAction = _userRepository.GetUserByCashActionId(dto.cashActionId);
+            User userByCashAction = _userRepository.GetUserByCategoryId(dto.categoryId);
 
             if (userId != userByCashAction.User_ID)
             {
