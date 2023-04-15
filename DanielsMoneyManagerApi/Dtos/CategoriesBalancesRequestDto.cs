@@ -1,6 +1,6 @@
 ﻿namespace DanielsMoneyManagerApi.Dtos
 {
-    public class BalancesRequestDto
+    public class CategoriesBalancesRequestDto
     {
         public DateTime toTime { get; set; }
     }

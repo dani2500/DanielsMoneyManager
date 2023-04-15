@@ -65,8 +65,45 @@ namespace DanielsMoneyManagerApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("status_history")]
+        public IActionResult GetBalanceHistory([FromQuery] CategoryBalanceHistoryRequestDto dto)
+        {
+            int userId = _jwtService.GetUserId(HttpContext.User);
+
+            List<FundStatusHistoryUnit> balances = _fundsRepository.GetFundsStatusHistory(userId, dto.maxTimeBackMonths);
+            List<FundStatusHistoryUnitDto> result = new List<FundStatusHistoryUnitDto>();
+
+            foreach (var item in balances)
+            {
+                result.Add(new FundStatusHistoryUnitDto
+                {
+                    fundId = item.Fund_ID,
+                    fromTime = item.From_Time,
+                    toTime = item.To_Time,
+                    status = item.Status
+                });
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("status_total")]
+        public IActionResult GetFundsStatusTotal([FromQuery] FundsStatusRequestDto dto)
+        {
+            int userId = _jwtService.GetUserId(HttpContext.User);
+
+            FundsStatusTotal status = _fundsRepository.GetFundsStatusTotal(userId, dto.toTime);
+
+            FundsStatusTotalDto result = new FundsStatusTotalDto
+            {
+                totalSum = status.Total_Sum
+            };
+
+            return Ok(result);
+        }
+
         [HttpPost("funds")]
-        public IActionResult InsertCategory(FundInsertDto dto)
+        public IActionResult InsertFund(FundInsertDto dto)
         {
             int userId = _jwtService.GetUserId(HttpContext.User);
 
@@ -92,7 +129,7 @@ namespace DanielsMoneyManagerApi.Controllers
 
 
         [HttpPut("funds")]
-        public IActionResult UpdateCategory(FundDto dto)
+        public IActionResult UpdateFund(FundDto dto)
         {
             int userId = _jwtService.GetUserId(HttpContext.User);
             Fund targetFund = _fundsRepository.GetFundById(dto.fundId);
@@ -112,7 +149,7 @@ namespace DanielsMoneyManagerApi.Controllers
         }
 
         [HttpDelete("funds")]
-        public IActionResult DeleteCategories(FundDeleteDto dto)
+        public IActionResult DeleteFunds(FundDeleteDto dto)
         {
             int userId = _jwtService.GetUserId(HttpContext.User);
             Fund targetFund = _fundsRepository.GetFundById(dto.fundId);

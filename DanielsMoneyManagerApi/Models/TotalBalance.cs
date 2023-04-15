@@ -2,6 +2,6 @@
 {
     public class TotalBalance
     {
-        public float Total_Balance { get; set; }
+        public decimal Total_Balance { get; set; }
     }
 }

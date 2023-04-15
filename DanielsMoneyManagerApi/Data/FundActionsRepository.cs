@@ -30,7 +30,7 @@ namespace DanielsMoneyManagerApi.Data
             return actions;
         }
 
-        public FundAction InsertFundActions(int fundId, float investmentSum, float currentState, string note, DateTime investmentDate)
+        public FundAction InsertFundActions(int fundId, decimal investmentSum, decimal currentState, string note, DateTime investmentDate)
         {
             FundAction action = null;
 
@@ -61,7 +61,7 @@ namespace DanielsMoneyManagerApi.Data
             }
         }
 
-        public void UpdateFundActions(int fundActionId, int fundId, float investmentSum, float currentState, string note, DateTime investmentDate)
+        public void UpdateFundActions(int fundActionId, int fundId, decimal investmentSum, decimal currentState, string note, DateTime investmentDate)
         {
             using (var connection = _context.CreateConnection())
             {

@@ -43,6 +43,39 @@ namespace DanielsMoneyManagerApi.Data
             return statuses;
         }
 
+        public FundsStatusTotal GetFundsStatusTotal(int userId, DateTime toTime)
+        {
+            FundsStatusTotal status = new FundsStatusTotal();
+
+            using (var connection = _context.CreateConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("User_ID", userId);
+                parameters.Add("To_Time", toTime);
+
+                status = connection.QueryFirstOrDefault<FundsStatusTotal>("Funds_Get_Status_Total", parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return status;
+        }
+
+        public List<FundStatusHistoryUnit> GetFundsStatusHistory(int userId, int maxTimeBackMonths)
+        {
+            List<FundStatusHistoryUnit> balances = new List<FundStatusHistoryUnit>();
+
+            using (var connection = _context.CreateConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("User_ID", userId);
+                parameters.Add("Max_Time_Back_Months", maxTimeBackMonths);
+
+
+                balances = connection.Query<FundStatusHistoryUnit>("Funds_Get_Status_History", parameters, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return balances;
+        }
+
         public Fund GetFundById(int fundId)
         {
             Fund fund = null;

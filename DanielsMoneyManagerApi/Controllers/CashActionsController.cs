@@ -180,16 +180,16 @@ namespace DanielsMoneyManagerApi.Controllers
         }
 
         [HttpGet("balances")]
-        public IActionResult GetBalances([FromQuery] BalancesRequestDto dto)
+        public IActionResult GetBalances([FromQuery] CategoriesBalancesRequestDto dto)
         {
             int userId = _jwtService.GetUserId(HttpContext.User);
 
-            List<CategoryBalance> balances = _cashActionsRepo.GetBalances(userId, dto.toTime);
-            List<BalancesResponseDto> result = new List<BalancesResponseDto>();
+            List<CategoryBalance> balances = _categoriesRepo.GetBalances(userId, dto.toTime);
+            List<CategoryBalanceResponseDto> result = new List<CategoryBalanceResponseDto>();
 
             foreach (var item in balances)
             {
-                result.Add(new BalancesResponseDto
+                result.Add(new CategoryBalanceResponseDto
                 {
                     categoryId = item.Category_ID,
                     categoryBalance = item.Category_Balance,
@@ -200,11 +200,33 @@ namespace DanielsMoneyManagerApi.Controllers
             return Ok(result);
         }
 
-        [HttpGet("total_balance")]
-        public IActionResult GetTotalBalance([FromQuery] BalancesRequestDto dto)
+        [HttpGet("balances_history")]
+        public IActionResult GetBalanceHistory([FromQuery] CategoryBalanceHistoryRequestDto dto)
         {
             int userId = _jwtService.GetUserId(HttpContext.User);
-            TotalBalance balance = _cashActionsRepo.GetTotalBalance(userId, dto.toTime);
+
+            List<CategoryBalanceHistoryUnit> balances = _categoriesRepo.GetBalanceHistory(userId, dto.maxTimeBackMonths);
+            List<CategoryBalanceHistoryUnitDto> result = new List<CategoryBalanceHistoryUnitDto>();
+
+            foreach (var item in balances)
+            {
+                result.Add(new CategoryBalanceHistoryUnitDto
+                {
+                    categoryId=item.Category_ID,
+                    fromTime=item.From_Time,
+                    toTime=item.To_Time,
+                    balance=item.Balance
+                });
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("total_balance")]
+        public IActionResult GetTotalBalance([FromQuery] CategoriesBalancesRequestDto dto)
+        {
+            int userId = _jwtService.GetUserId(HttpContext.User);
+            TotalBalance balance = _categoriesRepo.GetTotalBalance(userId, dto.toTime);
 
             TotalBalanceDto result = new TotalBalanceDto
             {

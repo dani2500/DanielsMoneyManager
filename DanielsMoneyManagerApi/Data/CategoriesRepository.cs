@@ -99,5 +99,55 @@ namespace DanielsMoneyManagerApi.Data
         }
 
 
+        public List<CategoryBalance> GetBalances(int userId, DateTime toTime)
+        {
+            List<CategoryBalance> balances = new List<CategoryBalance>();
+
+            using (var connection = _context.CreateConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("User_ID", userId);
+                parameters.Add("To_Time", toTime);
+
+
+                balances = connection.Query<CategoryBalance>("Categories_Get_Balances", parameters, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return balances;
+        }
+
+        public List<CategoryBalanceHistoryUnit> GetBalanceHistory(int userId, int maxTimeBackMonths)
+        {
+            List<CategoryBalanceHistoryUnit> balances = new List<CategoryBalanceHistoryUnit>();
+
+            using (var connection = _context.CreateConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("User_ID", userId);
+                parameters.Add("Max_Time_Back_Months", maxTimeBackMonths);
+
+
+                balances = connection.Query<CategoryBalanceHistoryUnit>("Categories_Get_Balances_History", parameters, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return balances;
+        }
+
+        public TotalBalance GetTotalBalance(int userId, DateTime toTime)
+        {
+            TotalBalance totalBalance = null;
+
+            using (var connection = _context.CreateConnection())
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("User_ID", userId);
+                parameters.Add("To_Time", toTime);
+
+                totalBalance = connection.QueryFirstOrDefault<TotalBalance>("Categories_Get_Total_Balance", parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return totalBalance;
+        }
+
     }
 }
