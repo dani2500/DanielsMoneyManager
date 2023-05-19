@@ -51,7 +51,6 @@ namespace DanielsMoneyManagerApi.Controllers
                 Jwt = jwt,
                 UserName = userName,
                 UserEmail = userEmail,
-                UserId = user.User_ID,
                 JwtLifeTimeMs = jwtLifeTimeMs
             };
 
@@ -86,7 +85,6 @@ namespace DanielsMoneyManagerApi.Controllers
                 Jwt = jwt,
                 UserName = user.User_Name,
                 UserEmail = userEmail,
-                UserId = user.User_ID,
                 JwtLifeTimeMs = jwtLifeTimeMs
             };
 

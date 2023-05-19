@@ -27,7 +27,7 @@ namespace DanielsMoneyManagerApi.Helpers
             };
 
             lifeTimeMs = _lifeTimeMs;
-            DateTime expireAt = DateTime.Now.AddMinutes(lifeTimeMs);
+            DateTime expireAt = DateTime.Now.AddMilliseconds(lifeTimeMs);
 
             var token = new JwtSecurityToken(
                 claims: userClaims,
